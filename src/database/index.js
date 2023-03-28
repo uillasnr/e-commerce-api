@@ -1,20 +1,20 @@
 // Criando conexão do model com o banco de dados
 
 import Sequelize from "sequelize"
-import Product from "../app/models/Product"
+///import Product from "../app/models/Product"
 import User from "../app/models/User"
-import Category from "../app/models/Category"
-import mongoose from "mongoose"
+///import Category from "../app/models/Category"
+///import mongoose from "mongoose"
 import ConfigDatabase from "../config/database"
 
 
 
-const models = [User, Product, Category]
+const models = [User]
 
 class Database {
   constructor() {
     this.init()
-    this.mongo()
+ 
 
   }
 // Postbird banco de dados
@@ -27,17 +27,8 @@ class Database {
   };
 
 
-  //banco de dados mongo
-  mongo() {
-    mongoose.set('strictQuery', false);
-    this.mongoConnection = mongoose.connect(
-      'mongodb://localhost:27017/codeburger',
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
-    )
-  }
+
+
 }
 
 export default new Database()
