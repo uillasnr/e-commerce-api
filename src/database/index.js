@@ -1,6 +1,7 @@
 // Criando conexão do model com o banco de dados
 
 import Sequelize from "sequelize"
+import Product from "../app/models/Product"
 ///import Product from "../app/models/Product"
 import User from "../app/models/User"
 ///import Category from "../app/models/Category"
@@ -9,7 +10,7 @@ import ConfigDatabase from "../config/database"
 
 
 
-const models = [User]
+const models = [User, Product]
 
 class Database {
   constructor() {
@@ -23,7 +24,7 @@ class Database {
     models
     .map((model) => model.init(this.connection))
     
-    .map((model) => model.associate && model.associate(this.connection.models))
+  /*   .map((model) => model.associate && model.associate(this.connection.models)) */
   };
 
 
