@@ -2,7 +2,7 @@
 
 import * as Yup from 'yup'
 import Product from '../models/Product'
-//import Category from '../models/Category'
+import Category from '../models/Category'
 import User from '../models/User'
 
 // Validação dos produtos
@@ -12,7 +12,7 @@ class ProductController {
             name: Yup.string().required(),
           /*   description: Yup.string().required(), */
             price: Yup.number().required(),
-            category: Yup.number().required(),
+            category_id: Yup.number().required(),
             /* offer: Yup.boolean() */
         })
 
@@ -33,13 +33,13 @@ class ProductController {
         } */
 
         const { filename: path } = request.file
-        const { name, price, category } = request.body
+        const { name, price, category_id } = request.body
 
         const product = await Product.create({
             name,
          /*    description, */
             price: price,
-            category,
+            category_id,
             path,
             
         })
@@ -64,7 +64,7 @@ class ProductController {
             ] */
         })
 
-      /*   console.log(request.userId) */
+        console.log(request.userId) 
         return response.json(products)
     }
 

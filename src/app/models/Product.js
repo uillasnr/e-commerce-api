@@ -7,11 +7,10 @@ class Product extends Model {
         super.init(
             {
                 name: Sequelize.STRING,
-              /*   description: Sequelize.TEXT, */ 
+               /*  description: Sequelize.TEXT, */ ///TESTE */   Description
                 price: Sequelize.STRING,
-                category: Sequelize.STRING,
                 path: Sequelize.STRING,
-             /*    offer: Sequelize.BOOLEAN, */
+              /*   offer: Sequelize.BOOLEAN, */
                 url: {
                     // Este campo não existe no banco de dados
                     // Gerando uma url quando o usuario solicita informações do produto
@@ -25,17 +24,17 @@ class Product extends Model {
                 sequelize
             }
         )
-       /*  return this */
+        return this 
     }
 
     // Criando relacionamento entre tabelas
 
-   /*  static associate(models) {
+     static associate(models) {
         this.belongsTo(models.Category, {
             foreignKey: 'category_id',
             as: 'category'
         }) // category_id, esse campo é uma chave extrangeira, pois está fazendo referência a um campo da tabela de categorias.
-    } */
+    } 
 }
 
 export default Product
