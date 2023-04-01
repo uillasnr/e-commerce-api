@@ -7,7 +7,7 @@ class Product extends Model {
         super.init(
             {
                 name: Sequelize.STRING,
-               /*  description: Sequelize.TEXT, */ ///TESTE */   Description
+                description: Sequelize.TEXT,  ///TESTE */   Description
                 price: Sequelize.STRING,
                 path: Sequelize.STRING,
               /*   offer: Sequelize.BOOLEAN, */
@@ -16,7 +16,7 @@ class Product extends Model {
                     // Gerando uma url quando o usuario solicita informações do produto
                     type: Sequelize.VIRTUAL,
                     get() {
-                        return `http://localhost:3001/product-file/${this.path}`
+                        return `http://localhost:3000/product-file/${this.path}`
                     }
                 }
             },
