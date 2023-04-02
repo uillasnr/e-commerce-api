@@ -10,10 +10,10 @@ class ProductController {
     async store(request, response) {
         const schema = Yup.object().shape({
             name: Yup.string().required(),
-            description: Yup.string().required(), //teste */ 
+            description: Yup.string().required(),
             price: Yup.number().required(),
             category_id: Yup.number().required(),
-            /* offer: Yup.boolean() */
+            offer: Yup.boolean()
         })
 
         try {
@@ -31,7 +31,7 @@ class ProductController {
         }
 
         const { filename: path } = request.file
-        const { name, price, category_id,  description } = request.body
+        const { name, price, category_id, offer, description } = request.body
 
         const product = await Product.create({
             name,
@@ -39,11 +39,11 @@ class ProductController {
             price: price,
             category_id,
             path,
-            
+            offer
         })
 
-        ///const file = request.file
-        //console.log(file)
+        // const file = request.file
+        // console.log(file)
         return response.json(product)
     } catch(err) {
         console.log(err)
@@ -76,10 +76,10 @@ class ProductController {
     async update(request, response) {
         const schema = Yup.object().shape({
             name: Yup.string(),
-            description: Yup.string().required(),
+            description: Yup.string(),
             price: Yup.number(),
             category_id: Yup.number(),
-            /* offer: Yup.boolean() */
+            offer: Yup.boolean()
         })
 
         try {
@@ -113,7 +113,7 @@ class ProductController {
             path = request.file.filename
         }
 
-        const { name, price, category_id, description } = request.body
+        const { name, price, category_id, offer, description } = request.body
 
         await Product.update(
             {
@@ -122,7 +122,7 @@ class ProductController {
                 price,
                 category_id,
                 path,
-                
+                offer
             },
             { where: { id } }
         )

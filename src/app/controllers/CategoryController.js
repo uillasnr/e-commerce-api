@@ -29,7 +29,7 @@ class CategoryController {
 
             const { name } = request.body
 
-           /*  const { filename: path } = request.file */
+             /* const { filename: path } = request.file  */
 
             // Validando categoria repetida
             const categoryExists = await Category.findOne({

@@ -10,11 +10,13 @@ class Product extends Model {
                 description: Sequelize.TEXT,  ///TESTE */   Description
                 price: Sequelize.STRING,
                 path: Sequelize.STRING,
-              /*   offer: Sequelize.BOOLEAN, */
+                offer: Sequelize.BOOLEAN,
+             
                 url: {
                     // Este campo não existe no banco de dados
                     // Gerando uma url quando o usuario solicita informações do produto
                     type: Sequelize.VIRTUAL,
+                    
                     get() {
                         return `http://localhost:3000/product-file/${this.path}`
                     }
@@ -32,7 +34,7 @@ class Product extends Model {
      static associate(models) {
         this.belongsTo(models.Category, {
             foreignKey: 'category_id',
-            as: 'category'
+            as: 'category'  
         }) // category_id, esse campo é uma chave extrangeira, pois está fazendo referência a um campo da tabela de categorias.
     } 
 }
