@@ -7,12 +7,22 @@ class Product extends Model {
         super.init(
             {
                 name: Sequelize.STRING,
-                description: Sequelize.TEXT,  ///TESTE */   Description
+                description: Sequelize.TEXT,  
                 price: Sequelize.STRING,
                 path: Sequelize.STRING,
                 offer: Sequelize.BOOLEAN,
              
-                url: {
+                 url: {
+                    // Este campo não existe no banco de dados
+                    // Gerando uma url quando o usuario solicita informações do produto
+                    type: Sequelize.VIRTUAL,
+                    
+                    get() {
+                        return `http://localhost:3001/product-file/${this.id}/${this.path}`
+                    }
+                }, 
+
+                /* url1: {
                     // Este campo não existe no banco de dados
                     // Gerando uma url quando o usuario solicita informações do produto
                     type: Sequelize.VIRTUAL,
@@ -20,8 +30,21 @@ class Product extends Model {
                     get() {
                         return `http://localhost:3001/product-file/${this.path}`
                     }
-                }
+                },
+                url2: {
+                    type: Sequelize.VIRTUAL,
+                    get() {
+                        return `http://localhost:3001/product-file/${this.path}`
+                    }
+                },
+                url3: {
+                    type: Sequelize.VIRTUAL,
+                    get() {
+                        return `http://localhost:3001/product-file/${this.path}`
+                    }
+                } */
             },
+            
             {
                 sequelize
             }

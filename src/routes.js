@@ -22,7 +22,9 @@ routes.use(authMiddleware) //será chamado por todas as rotas ABAIXO.
 
 routes.post("/products", upload.single('file'), ProductController.store)
 
-//routes.post("/products", upload.array('file', 2), ProductController.store)
+//routes.post('/products', upload.array('file', 2), ProductController.store) 
+
+  
 
 routes.get('/products', ProductController.index)
 routes.put('/products/:id', upload.single('file'), ProductController.update)

@@ -41,9 +41,11 @@ class ProductController {
             path,
             offer
         })
+        
 
-        // const file = request.file
-        // console.log(file)
+        //const file = request.file
+        //console.log(file)
+
         return response.json(product)
     } catch(err) {
         console.log(err)
