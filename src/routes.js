@@ -20,9 +20,14 @@ routes.post('/sessions', SessionController.Store)
 
 routes.use(authMiddleware) //será chamado por todas as rotas ABAIXO.
 
-routes.post("/products", upload.single('file'), ProductController.store)
+//routes.post("/products", upload.single('file'), ProductController.store)
 
-//routes.post('/products', upload.array('file', 2), ProductController.store) 
+routes.post("/products", upload.fields([
+    { name: 'file', maxCount: 1 },
+    { name: 'img1', maxCount: 1 },
+   // { name: 'field2', maxCount: 1 }
+  ]), ProductController.store);
+  
 
   
 

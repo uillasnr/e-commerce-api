@@ -30,23 +30,46 @@ class ProductController {
             return response.status(401).json()
         }
 
-        const { filename: path } = request.file
-        const { name, price, category_id, offer, description } = request.body
+        /*  const { filename: path } = request.files */
+        /*         const { file, field1, field2 } = request.files;
+       
+                const { name, price, category_id, offer, description } = request.body
+       
+               const product = await Product.create({
+                   name,
+                   description,
+                   price: price,
+                   category_id,
+                   path,
+                   offer
+               })    
+               
+       
+             
+       
+               return response.json(product) */
+
+
+        const { file, img1 } = request.files;
+ 
+        const { name, price, category_id, offer, description } = request.body;
 
         const product = await Product.create({
             name,
             description,
-            price: price,
+            price,
             category_id,
-            path,
+           // path: file[0].path, // caminho do arquivo enviado no campo "file"
+            path: file[0].filename, // assumindo que há apenas um arquivo enviado para o campo "file"
+            img1: img1[0].filename, // assumindo que há apenas um arquivo enviado para o campo "img1"
             offer
-        })
-        
+        }); 
+     //console.log(file,img1)
 
-        //const file = request.file
-        //console.log(file)
+        return response.json(product);
 
-        return response.json(product)
+    
+
     } catch(err) {
         console.log(err)
     }

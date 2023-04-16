@@ -10,6 +10,7 @@ class Product extends Model {
                 description: Sequelize.TEXT,  
                 price: Sequelize.STRING,
                 path: Sequelize.STRING,
+                img1: Sequelize.STRING, // novo campo para a segunda imagem
                 offer: Sequelize.BOOLEAN,
              
                  url: {
@@ -19,19 +20,27 @@ class Product extends Model {
                     
                     get() {
                         return `http://localhost:3001/product-file/${this.id}/${this.path}`
+                       
                     }
                 }, 
+                 urlimg1: { // novo campo virtual para a segunda imagem
+                    type: Sequelize.VIRTUAL,
+                    get() {
+                        return `http://localhost:3001/product-file/${this.id}/${this.img1}`
+                    }
+                } 
+            
 
-                /* url1: {
+              /*    url1: {
                     // Este campo não existe no banco de dados
                     // Gerando uma url quando o usuario solicita informações do produto
                     type: Sequelize.VIRTUAL,
                     
                     get() {
-                        return `http://localhost:3001/product-file/${this.path}`
+                        return `http://localhost:3001/product-file/${this.path1}`
                     }
-                },
-                url2: {
+                }, */
+         /*        url2: {
                     type: Sequelize.VIRTUAL,
                     get() {
                         return `http://localhost:3001/product-file/${this.path}`
@@ -42,7 +51,7 @@ class Product extends Model {
                     get() {
                         return `http://localhost:3001/product-file/${this.path}`
                     }
-                } */
+                }  */
             },
             
             {
