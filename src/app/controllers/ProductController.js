@@ -30,28 +30,7 @@ class ProductController {
             return response.status(401).json()
         }
 
-        /*  const { filename: path } = request.files */
-        /*         const { file, field1, field2 } = request.files;
-       
-                const { name, price, category_id, offer, description } = request.body
-       
-               const product = await Product.create({
-                   name,
-                   description,
-                   price: price,
-                   category_id,
-                   path,
-                   offer
-               })    
-               
-       
-             
-       
-               return response.json(product) */
-
-
-        const { file, img1 } = request.files;
- 
+        const { file, file2, file3, file4 } = request.files;
         const { name, price, category_id, offer, description } = request.body;
 
         const product = await Product.create({
@@ -59,38 +38,53 @@ class ProductController {
             description,
             price,
             category_id,
-           // path: file[0].path, // caminho do arquivo enviado no campo "file"
-            path: file[0].filename, // assumindo que há apenas um arquivo enviado para o campo "file"
-            img1: img1[0].filename, // assumindo que há apenas um arquivo enviado para o campo "img1"
+            path_1: file[0].filename, // assumindo que há apenas um arquivo enviado para o campo "file[0]"
+            path_2: file2[0].filename, 
+            path_3: file3[0].filename,
+            path_4: file4[0].filename,
             offer
-        }); 
-     //console.log(file,img1)
+        });
 
         return response.json(product);
-
-    
 
     } catch(err) {
         console.log(err)
     }
 
-    // Essa rota retorna todos os produtos
+
+
     async index(request, response) {
-        const products = await Product.findAll({
-            include: [
-                {
-                    model: Category,
-                    as: 'category',
-                    attributes: ['id', 'name']
-                }
-            ]
-        })
+        const { id } = request.params
+
+        let products
+
+        if (id) {
+            // Busca o produto com o ID especificado
+            products = await Product.findByPk(id, {
+                include: [
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id', 'name']
+                    }
+                ]
+            })
+        } else {
+            // Busca todos os produtos
+            products = await Product.findAll({
+                include: [
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id', 'name']
+                    }
+                ]
+            })
+        }
 
         console.log(request.userId)
         return response.json(products)
     }
-
-
 
 
 

@@ -23,15 +23,19 @@ routes.use(authMiddleware) //será chamado por todas as rotas ABAIXO.
 //routes.post("/products", upload.single('file'), ProductController.store)
 
 routes.post("/products", upload.fields([
-    { name: 'file', maxCount: 1 },
-    { name: 'img1', maxCount: 1 },
-   // { name: 'field2', maxCount: 1 }
-  ]), ProductController.store);
-  
+  { name: 'file', maxCount: 1 },
+  { name: 'file2', maxCount: 1 },
+  { name: 'file3', maxCount: 1 },
+  { name: 'file4', maxCount: 1 },
+]), ProductController.store);
 
-  
 
+// Rota para buscar todos os produtos
 routes.get('/products', ProductController.index)
+
+// Rota para buscar um produto específico com base no ID
+routes.get('/products/:id', ProductController.index)
+
 routes.put('/products/:id', upload.single('file'), ProductController.update)
 
 routes.post("/categories", upload.single('file'), CategoryController.store)

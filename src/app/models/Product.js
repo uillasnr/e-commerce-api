@@ -7,68 +7,61 @@ class Product extends Model {
         super.init(
             {
                 name: Sequelize.STRING,
-                description: Sequelize.TEXT,  
+                description: Sequelize.TEXT,
                 price: Sequelize.STRING,
-                path: Sequelize.STRING,
-                img1: Sequelize.STRING, // novo campo para a segunda imagem
+                path_1: Sequelize.STRING,
+                path_2: Sequelize.STRING,
+                path_3: Sequelize.STRING,
+                path_4: Sequelize.STRING,
                 offer: Sequelize.BOOLEAN,
-             
-                 url: {
-                    // Este campo não existe no banco de dados
-                    // Gerando uma url quando o usuario solicita informações do produto
-                    type: Sequelize.VIRTUAL,
-                    
-                    get() {
-                        return `http://localhost:3001/product-file/${this.id}/${this.path}`
-                       
-                    }
-                }, 
-                 urlimg1: { // novo campo virtual para a segunda imagem
-                    type: Sequelize.VIRTUAL,
-                    get() {
-                        return `http://localhost:3001/product-file/${this.id}/${this.img1}`
-                    }
-                } 
-            
 
-              /*    url1: {
+                url_img1: {
                     // Este campo não existe no banco de dados
                     // Gerando uma url quando o usuario solicita informações do produto
                     type: Sequelize.VIRTUAL,
-                    
+
                     get() {
-                        return `http://localhost:3001/product-file/${this.path1}`
-                    }
-                }, */
-         /*        url2: {
-                    type: Sequelize.VIRTUAL,
-                    get() {
-                        return `http://localhost:3001/product-file/${this.path}`
+                        return `http://localhost:3001/product-file/${this.id}/${this.path_1}`
+
                     }
                 },
-                url3: {
+                url_img2: {
                     type: Sequelize.VIRTUAL,
                     get() {
-                        return `http://localhost:3001/product-file/${this.path}`
+                        return `http://localhost:3001/product-file/${this.id}/${this.path_2}`
                     }
-                }  */
+                },
+                url_img3: {
+                    type: Sequelize.VIRTUAL,
+
+                    get() {
+                        return `http://localhost:3001/product-file/${this.id}/${this.path_3}`
+                    }
+                },
+                url_img4: {
+                    type: Sequelize.VIRTUAL,
+                    get() {
+                        return `http://localhost:3001/product-file/${this.id}/${this.path_4}`
+                    }
+                },
+
             },
-            
+
             {
                 sequelize
             }
         )
-        return this 
+        return this
     }
 
     // Criando relacionamento entre tabelas
 
-     static associate(models) {
+    static associate(models) {
         this.belongsTo(models.Category, {
             foreignKey: 'category_id',
-            as: 'category'  
+            as: 'category'
         }) // category_id, esse campo é uma chave extrangeira, pois está fazendo referência a um campo da tabela de categorias.
-    } 
+    }
 }
 
 export default Product
