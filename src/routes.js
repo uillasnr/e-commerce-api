@@ -33,10 +33,14 @@ routes.post("/products", upload.fields([
 // Rota para buscar todos os produtos
 routes.get('/products', ProductController.index)
 
+ routes.get('/search', ProductController.search)///////////////////////////////////
+
+ 
 // Rota para buscar um produto específico com base no ID
 routes.get('/products/:id', ProductController.index)
-
 routes.put('/products/:id', upload.single('file'), ProductController.update)
+
+
 
 routes.post("/categories", upload.single('file'), CategoryController.store)
 routes.get('/categories', CategoryController.index)

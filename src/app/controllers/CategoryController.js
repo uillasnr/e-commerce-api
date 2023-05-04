@@ -29,7 +29,7 @@ class CategoryController {
 
             const { name } = request.body
 
-            /*   const { filename: path } = request.file   */
+            const { filename: path } = request.file
 
             // Validando categoria repetida
             const categoryExists = await Category.findOne({
@@ -46,7 +46,7 @@ class CategoryController {
             }
  
             // Criando nova categoria
-            const { id } = await Category.create({ name })
+            const { id } = await Category.create({ name, path })
 
             return response.json({ name, id })
         } catch (err) {

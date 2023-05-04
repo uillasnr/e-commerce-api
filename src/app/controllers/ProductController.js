@@ -39,7 +39,7 @@ class ProductController {
             price,
             category_id,
             path_1: file[0].filename, // assumindo que há apenas um arquivo enviado para o campo "file[0]"
-            path_2: file2[0].filename, 
+            path_2: file2[0].filename,
             path_3: file3[0].filename,
             path_4: file4[0].filename,
             offer
@@ -50,8 +50,41 @@ class ProductController {
     } catch(err) {
         console.log(err)
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //buscar o produto pelo nome
+    async search(request, response) {
+         const { name } = request.query;
+        const { Op } = require('sequelize');
+
+        /*   if (!name) {
+             return response.status(400).json({ error: 'Nome do produto não fornecido' });
+         } */
+
+        // Busca produtos pelo nome
+        const products = await Product.findAll({
+            attributes: ['name'],
+            where: {
+                name: {
+                    [ Op.iLike]: `%uillas%`
+                }               /*  '%Nome do produto%' */ //se passar assim da serto
+            },
+            /*    include: [
+                  {
+                      model: Category,
+                      as: 'category',
+                      attributes: ['id', 'name']
+                  }
+              ]  */
+        })
+   /*  const productNames = products.map(product => product.name);
+    console.log(productNames) */;
+        //console.log(products)
+        return response.json(products);
+    }
 
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     async index(request, response) {
         const { id } = request.params
@@ -151,3 +184,6 @@ class ProductController {
 }
 
 export default new ProductController()
+
+
+

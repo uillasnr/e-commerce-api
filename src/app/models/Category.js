@@ -7,15 +7,15 @@ class Category extends Model {
         super.init(
             {
                 name: Sequelize.STRING,
-               /*   path: Sequelize.STRING, 
+                  path: Sequelize.STRING, 
                 url: {
                     // Este campo não existe no banco de dados
                     // Gerando uma url quando o usuario solicita informações do produto
                     type: Sequelize.VIRTUAL,
                     get() {
-                        return `http://localhost:3000/category-file/${this.path}`
+                        return `http://localhost:3001/category-file/${this.path}`
                     }
-                } */
+                } 
             },
             {
                 sequelize
