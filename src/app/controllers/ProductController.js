@@ -55,6 +55,7 @@ class ProductController {
     async search(request, response) {
          const { name } = request.query;
         const { Op } = require('sequelize');
+        
 
         /*   if (!name) {
              return response.status(400).json({ error: 'Nome do produto não fornecido' });
@@ -65,7 +66,7 @@ class ProductController {
             attributes: ['name'],
             where: {
                 name: {
-                    [ Op.iLike]: `%uillas%`
+                    [ Op.iLike]: `%${name}%`
                 }               /*  '%Nome do produto%' */ //se passar assim da serto
             },
             /*    include: [
