@@ -20,8 +20,6 @@ routes.post('/sessions', SessionController.Store)
 
 routes.use(authMiddleware) //será chamado por todas as rotas ABAIXO.
 
-//routes.post("/products", upload.single('file'), ProductController.store)
-
 routes.post("/products", upload.fields([
   { name: 'file', maxCount: 1 },
   { name: 'file2', maxCount: 1 },
@@ -30,12 +28,13 @@ routes.post("/products", upload.fields([
 ]), ProductController.store);
 
 
+// Rota para busca produtos pelo Nome
+routes.get('/search/:name', ProductController.search)
+
+
+
 // Rota para buscar todos os produtos
 routes.get('/products', ProductController.index)
-
- routes.get('/search', ProductController.search)///////////////////////////////////
-
- 
 // Rota para buscar um produto específico com base no ID
 routes.get('/products/:id', ProductController.index)
 routes.put('/products/:id', upload.single('file'), ProductController.update)

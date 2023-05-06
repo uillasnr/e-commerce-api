@@ -50,43 +50,42 @@ class ProductController {
     } catch(err) {
         console.log(err)
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    //buscar o produto pelo nome
+
+
+
+    // Busca produtos pelo Nome
     async search(request, response) {
-         const { name } = request.query;
+        const { name } = request.params;
         const { Op } = require('sequelize');
-        
 
-        /*   if (!name) {
-             return response.status(400).json({ error: 'Nome do produto não fornecido' });
-         } */
 
-        // Busca produtos pelo nome
+        if (!name) {
+            return response.status(400).json({ error: 'this product does not exist' });
+        }
+
+
         const products = await Product.findAll({
-            attributes: ['name'],
+
             where: {
                 name: {
-                    [ Op.iLike]: `%${name}%`
-                }               /*  '%Nome do produto%' */ //se passar assim da serto
+                    [Op.iLike]: `%${name}%`
+                }
             },
-            /*    include: [
-                  {
-                      model: Category,
-                      as: 'category',
-                      attributes: ['id', 'name']
-                  }
-              ]  */
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name']
+                }
+            ]
         })
-   /*  const productNames = products.map(product => product.name);
-    console.log(productNames) */;
-        //console.log(products)
+
         return response.json(products);
     }
 
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    // Busca de produtos
     async index(request, response) {
         const { id } = request.params
 
