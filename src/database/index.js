@@ -15,7 +15,7 @@ const models = [User, Product, Category]
 class Database {
   constructor() {
     this.init()
-this.mongo()
+    this.mongo()
 
   }
   // Postbird banco de dados
@@ -29,16 +29,16 @@ this.mongo()
 
 
   //conexão como o banco de dados mongo
-    mongo() {
-   
-      this.mongoConnection = mongoose.connect(
-        'mongodb://localhost:27017/Ecommerce',
-        {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        }
-      )
-    }
+  mongo() {
+
+    this.mongoConnection = mongoose.connect(
+      'mongodb://localhost:27017/Ecommerce',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    )
   }
+}
 
 export default new Database()

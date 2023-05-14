@@ -9,6 +9,7 @@ import CategoryController from "./app/controllers/CategoryController"
 import ProductController from "./app/controllers/ProductController"
 import SessionController from "./app/controllers/SessionController"
 import UserController from "./app/controllers/UserController"
+import OrderController from "./app/controllers/OrderController"
 
 const upload = multer(multerConfig)
 
@@ -31,8 +32,6 @@ routes.post("/products", upload.fields([
 // Rota para busca produtos pelo Nome
 routes.get('/search/:name', ProductController.search)
 
-
-
 // Rota para buscar todos os produtos
 routes.get('/products', ProductController.index)
 // Rota para buscar um produto específico com base no ID
@@ -45,5 +44,9 @@ routes.post("/categories", upload.single('file'), CategoryController.store)
 routes.get('/categories', CategoryController.index)
 routes.put('/categories/:id', upload.single('file'), CategoryController.update)
 
+
+routes.post('/orders', OrderController.store)
+routes.put('/orders/:id', OrderController.update)
+routes.get('/orders', OrderController.index)
 
 export default routes
