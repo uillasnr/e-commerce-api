@@ -25,10 +25,6 @@ const OrderSchema = new mongoose.Schema(
                     type: String,
                     required: true
                 },
-                /*    description: {  
-                       type: String,
-                       required: true
-                   },  */
                 price: {
                     type: Number,
                     required: true
@@ -44,7 +40,11 @@ const OrderSchema = new mongoose.Schema(
                 quantity: {
                     type: Number,
                     required: true
-                }
+                },
+                freightValu: {
+                    type: Number,
+                    /* required: true */ // O valor padrão do frete é zero, mas você pode ajustá-lo conforme necessário.
+                  },
             },
         ],
         totalPrice: {

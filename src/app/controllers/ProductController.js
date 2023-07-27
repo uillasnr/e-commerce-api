@@ -38,10 +38,10 @@ class ProductController {
             description,
             price,
             category_id,
-            path_1: file[0].filename, // assumindo que há apenas um arquivo enviado para o campo "file[0]"
+            path_1: file[0].filename, 
             path_2: file2[0].filename,
             path_3: file3[0].filename,
-            path_4: file4[0].filename,
+            path_4: file4[0].filename, 
             offer
         });
 
@@ -85,7 +85,7 @@ class ProductController {
 
 
 
-    // Busca de produtos
+    // Busca de Todos  produtos 
     async index(request, response) {
         const { id } = request.params
 
@@ -122,9 +122,7 @@ class ProductController {
 
 
 
-
-
-    /* Metodo para editar produto */
+    /* Metodo para editar produtos */
     async update(request, response) {
         const schema = Yup.object().shape({
             name: Yup.string(),
@@ -160,10 +158,11 @@ class ProductController {
         }
 
         // Verificando se o usuario está enviando uma imagem
-        let path
+        let path_1
         if (request.file) {
-            path = request.file.filename
+            path_1 = request.file.filename
         }
+
 
         const { name, price, category_id, offer, description } = request.body
 
@@ -173,7 +172,7 @@ class ProductController {
                 description,
                 price,
                 category_id,
-                path,
+                path_1,
                 offer
             },
             { where: { id } }
@@ -181,6 +180,37 @@ class ProductController {
 
         return response.status(200).json()
     }
+
+
+
+
+    //Deletar produto
+    async delete(request, response) {
+        // Verificando se o usuário é um administrador
+        const { admin: isAdmin } = await User.findByPk(request.userId);
+        if (!isAdmin) {
+            return response.status(401).json();
+        }
+
+        // Obtendo o ID do produto a ser deletado
+        const { id } = request.params;
+
+        // Verificando se o produto existe
+        const product = await Product.findByPk(id);
+        if (!product) {
+            return response
+                .status(404)
+                .json({ error: 'Product not found' });
+        }
+
+        // Deletando o produto
+        await Product.destroy({ where: { id } });
+
+        return response.status(200).json();
+    }
+
+
+
 }
 
 export default new ProductController()
