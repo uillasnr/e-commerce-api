@@ -10,8 +10,8 @@ import ProductController from "./app/controllers/ProductController"
 import SessionController from "./app/controllers/SessionController"
 import UserController from "./app/controllers/UserController"
 import OrderController from "./app/controllers/OrderController"
-import PaymentController from "./app/controllers/paymentController"
 import FreightController from "./app/controllers/FreightController"
+import PaymentController from "./app/controllers/PaymentController"
 
 
 
@@ -28,7 +28,7 @@ routes.post('/sessions', SessionController.Store)
 
 //Quando um usuário tentar acessar qualquer rota a baixo do authMiddleware a função será executada primeiro.
 //A authMiddlewarefunção verificará se o usuário está logado ou possui as credenciais necessárias para acessar as rotas protegidas.
-//routes.use(authMiddleware) 
+routes.use(authMiddleware) 
 
 routes.post("/products", upload.fields([
   { name: 'file', maxCount: 1 },
@@ -66,7 +66,7 @@ routes.post('/frete', FreightController.store);
 
 //Quando um usuário tentar acessar qualquer rota a baixo do authMiddleware a função será executada primeiro.
 //A authMiddlewarefunção verificará se o usuário está logado ou possui as credenciais necessárias para acessar as rotas protegidas.
-routes.use(authMiddleware) 
+//routes.use(authMiddleware) 
 
 routes.post('/orders', OrderController.store)
 routes.put('/orders/:id', OrderController.update)

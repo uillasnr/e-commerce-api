@@ -12,6 +12,7 @@ class ProductController {
             name: Yup.string().required(),
             description: Yup.string().required(),
             price: Yup.number().required(),
+            previou_price: Yup.number(),
             category_id: Yup.number().required(),
             offer: Yup.boolean()
         })
@@ -31,17 +32,18 @@ class ProductController {
         }
 
         const { file, file2, file3, file4 } = request.files;
-        const { name, price, category_id, offer, description } = request.body;
+        const { name, price, previou_price, category_id, offer, description } = request.body;
 
         const product = await Product.create({
             name,
             description,
             price,
+            previou_price,
             category_id,
-            path_1: file[0].filename, 
+            path_1: file[0].filename,
             path_2: file2[0].filename,
             path_3: file3[0].filename,
-            path_4: file4[0].filename, 
+            path_4: file4[0].filename,
             offer
         });
 
@@ -128,6 +130,7 @@ class ProductController {
             name: Yup.string(),
             description: Yup.string(),
             price: Yup.number(),
+            previou_price: Yup.number(),
             category_id: Yup.number(),
             offer: Yup.boolean()
         })
@@ -164,13 +167,14 @@ class ProductController {
         }
 
 
-        const { name, price, category_id, offer, description } = request.body
+        const { name, price, previou_price, category_id, offer, description } = request.body
 
         await Product.update(
             {
                 name,
                 description,
                 price,
+                previou_price,
                 category_id,
                 path_1,
                 offer
