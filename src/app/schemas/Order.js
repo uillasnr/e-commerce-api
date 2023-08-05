@@ -41,10 +41,10 @@ const OrderSchema = new mongoose.Schema(
                     type: Number,
                     required: true
                 },
-                freightValu: {
+                /* freightValu: {
                     type: Number,
-                    /* required: true */ // O valor padrão do frete é zero, mas você pode ajustá-lo conforme necessário.
-                  },
+                 required: true  // O valor padrão do frete é zero, mas você pode ajustá-lo conforme necessário.
+                  }, */
             },
         ],
         totalPrice: {

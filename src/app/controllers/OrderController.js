@@ -3,8 +3,7 @@ import Category from '../models/Category';
 import Product from '../models/Product';
 import Order from '../schemas/Order';
 import User from '../models/User';
-import paymentController from './paymentController';
-
+import PaymentController from './PaymentController';
 
 
 class OrderController {
@@ -65,11 +64,14 @@ class OrderController {
       totalPrice += product.price * product.quantity; // calcula o preço total de cada produto e acumula na variável
     });
 
-    // Aqui você define a lógica para calcular o valor do frete.
+    // Aqui define a lógica para calcular o valor do frete.
     const freightValu = parseFloat(request.body.freightValu);
 
+    // Extrai os dados do endereço do corpo da requisição
+    const { addressData } = request.body;
+
     const totalOrderValue = totalPrice + freightValu;
-//console.log(totalOrderValue);
+
     const order = {
       user: {
         id: request.userId,
@@ -77,29 +79,25 @@ class OrderController {
       },
       products: editedProduct,
       status: 'Pedido realizado',
-      totalPrice: totalOrderValue,// Adiciona o valor do frete ao preço total.
-      //freightValu: freightValu,  // Salva o valor do frete no campo correspondente do pedido.
+      totalPrice: totalOrderValue,
+      freightValu: freightValu,
+      address: addressData, // Incluir os dados do endereço no objeto do pedido
     };
-//console.log(order);
+    console.log(addressData);
+
     const orderResponse = await Order.create(order);
 
-  
-// Instead of creating the order here, you call the payment processing method and pass the order data
+
+    //Para garantir que apenas uma ordem seja criada, você pode modificar o código para criar
+    //a ordem apenas após o processamento do pagamento. Isso significa que você só criará a 
+    // ordem se o pagamento for bem-sucedido.
     try {
-      await paymentController.store(request, response, order,totalOrderValue);
+      await PaymentController.store(request, response, order, freightValu);
     } catch (error) {
       return response.status(500).json({ error: 'Failed to process payment' });
     }
   }
 
-    //Para garantir que apenas uma ordem seja criada, você pode modificar o código para criar
-    //a ordem apenas após o processamento do pagamento. Isso significa que você só criará a 
-    // ordem se o pagamento for bem-sucedido.
-  //  await paymentController.store(request, response, order);
-
-    // return response.status(201).json(orderResponse);  
- // }
-//////////////////////////////////////////////////////////////
 
 
   // Obtém o último pedido com base na data de criação (ordenado de forma decrescente)

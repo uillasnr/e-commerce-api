@@ -6,8 +6,8 @@ module.exports = {
 
     await queryInterface.addColumn('products', 'previousPrice', {
       type: Sequelize.INTEGER,
-      defaultValue: false,
-      allowNull: false,
+      defaultValue: null,
+      allowNull: true,
     });
 
   },

@@ -1,4 +1,4 @@
-/* Controller de Categorias. É aqui que vai chegar os dados */
+
 
 import * as Yup from 'yup'
 import Category from '../models/Category'

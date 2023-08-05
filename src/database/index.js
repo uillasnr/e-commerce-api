@@ -7,10 +7,10 @@ import User from "../app/models/User"
 import Category from "../app/models/Category"
 import mongoose from "mongoose"
 import ConfigDatabase from "../config/database"
+import ProductRating from "../app/models/ProductRating";
 
 
-
-const models = [User, Product, Category]
+const models = [User, Product, Category, ProductRating]
 
 class Database {
   constructor() {

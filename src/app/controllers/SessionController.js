@@ -25,23 +25,24 @@ class SessionController {
 
 
         const { email, password } = request.body
-
+        // Procurando o usuário no banco de dados usando o email fornecido
         const user = await User.findOne({
             where: { email },
         })
-
+        // Se nenhum usuário for encontrado com o email fornecido, envia uma resposta de erro
         if (!user) userEmailOrPasswordIncorrect()
 
         if (!(await user.checkPassword(password))) userEmailOrPasswordIncorrect()
 
+        // Se todas as verificações passarem, gera um token JWT e envia na resposta
         return response.json({
             id: user.id,
             email,
             name: user.name,
             admin: user.admin,
-             token: Jwt.sign({ id: user.id, name: user.name }, authConfig.secret, {
+            token: Jwt.sign({ id: user.id, name: user.name }, authConfig.secret, {
                 expiresIn: authConfig.expiresIn,
-            }), 
+            }),
         })
     }
 }

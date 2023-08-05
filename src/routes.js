@@ -12,6 +12,7 @@ import UserController from "./app/controllers/UserController"
 import OrderController from "./app/controllers/OrderController"
 import FreightController from "./app/controllers/FreightController"
 import PaymentController from "./app/controllers/PaymentController"
+import ProductRatingController from "./app/controllers/ProductRatingController"
 
 
 
@@ -40,11 +41,13 @@ routes.post("/products", upload.fields([
 
 // Rota para busca produtos pelo Nome
 routes.get('/search/:name', ProductController.search)
-
 // Rota para buscar todos os produtos
 routes.get('/products', ProductController.index)
 // Rota para buscar um produto específico com base no ID
 routes.get('/products/:id', ProductController.index)
+
+// Rota para avaliar e comentar um produto
+//routes.post('/products/:id/rate', ProductController.rate);
 
 routes.put('/products/:id', upload.fields([
   { name: 'file', maxCount: 1 },
@@ -67,6 +70,11 @@ routes.post('/frete', FreightController.store);
 //Quando um usuário tentar acessar qualquer rota a baixo do authMiddleware a função será executada primeiro.
 //A authMiddlewarefunção verificará se o usuário está logado ou possui as credenciais necessárias para acessar as rotas protegidas.
 //routes.use(authMiddleware) 
+
+// Rota para avaliar e comentar um produto
+routes.post('/products/:id/rate', ProductRatingController.store);
+// Rota para obter todas as avaliações de um produto
+routes.get('/products/:id/ratings', ProductRatingController.getAllRatings);
 
 routes.post('/orders', OrderController.store)
 routes.put('/orders/:id', OrderController.update)

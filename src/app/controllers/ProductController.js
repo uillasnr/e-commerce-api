@@ -5,6 +5,7 @@ import Product from '../models/Product'
 import Category from '../models/Category'
 import User from '../models/User'
 
+
 // Validação dos produtos
 class ProductController {
     async store(request, response) {
@@ -14,7 +15,9 @@ class ProductController {
             price: Yup.number().required(),
             previou_price: Yup.number(),
             category_id: Yup.number().required(),
-            offer: Yup.boolean()
+            offer: Yup.boolean(),
+          /*   rating: Yup.number().min(1).max(5),
+            comment: Yup.string(), // Comentário sobre o produto   */
         })
 
         try {
@@ -32,7 +35,7 @@ class ProductController {
         }
 
         const { file, file2, file3, file4 } = request.files;
-        const { name, price, previou_price, category_id, offer, description } = request.body;
+        const { name, price, previou_price, category_id, offer, description, rating, comment } = request.body;
 
         const product = await Product.create({
             name,
@@ -44,7 +47,9 @@ class ProductController {
             path_2: file2[0].filename,
             path_3: file3[0].filename,
             path_4: file4[0].filename,
-            offer
+            offer,
+           /*  rating,
+            comment */
         });
 
         return response.json(product);
@@ -213,7 +218,7 @@ class ProductController {
         return response.status(200).json();
     }
 
-
+  
 
 }
 
