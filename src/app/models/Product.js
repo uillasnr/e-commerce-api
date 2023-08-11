@@ -15,8 +15,7 @@ class Product extends Model {
                 path_3: Sequelize.STRING,
                 path_4: Sequelize.STRING,
                 offer: Sequelize.BOOLEAN,
-              //  rating: Sequelize.STRING,// Novo atributo para avaliação (1 a 5 estrelas)
-               // comment: Sequelize.STRING, // fazer comentário  sobre o produto 
+                news: Sequelize.BOOLEAN,
 
                 url_img1: {
                     // Este campo não existe no banco de dados
@@ -64,11 +63,11 @@ class Product extends Model {
             as: 'category'
         }), // category_id, esse campo é uma chave extrangeira, pois está fazendo referência a um campo da tabela de categorias.
 
-       // Corrija o relacionamento com o modelo ProductRating
-    this.hasMany(models.ProductRating, {
-        foreignKey: 'productId', // Nome correto da chave estrangeira
-        as: 'ratings', // Nome correto do relacionamento
-      });
+            // Corrija o relacionamento com o modelo ProductRating
+            this.hasMany(models.ProductRating, {
+                foreignKey: 'productId', // Nome correto da chave estrangeira
+                as: 'ratings', // Nome correto do relacionamento
+            });
     }
 }
 
