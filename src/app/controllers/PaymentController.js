@@ -1,3 +1,4 @@
+
 const stripe = require('stripe')('sk_test_51NTTWYJAKW5s1XT0vBfMBgCAQ7Ackfp4Jmi8moSq1vOryiyoKclDml6nt6depfDFIo1OAu0hzm44hpq2vOxH9CKV00jVvVCdg5');
 
 class PaymentController {
@@ -50,8 +51,7 @@ class PaymentController {
         success_url: 'http://localhost:3000/success',
         cancel_url: 'http://localhost:3000/cancel'
       });
-    //  console.log(session);
-      // Resposta da URL do checkout
+  
       return res.json({ url: session.url, products, freightValu, totalPrice });
 
     } catch (error) {

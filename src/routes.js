@@ -1,4 +1,4 @@
-//chamar usuarios para o banco de dados
+
 
 import { Router } from "express"
 import multer from "multer"
@@ -16,27 +16,13 @@ import ProductRatingController from "./app/controllers/ProductRatingController"
 
 
 
-
 const upload = multer(multerConfig)
-
 
 const routes = new Router()
 
 routes.post('/users', UserController.store)
 routes.post('/sessions', SessionController.Store)
 
-
-
-//Quando um usuário tentar acessar qualquer rota a baixo do authMiddleware a função será executada primeiro.
-//A authMiddlewarefunção verificará se o usuário está logado ou possui as credenciais necessárias para acessar as rotas protegidas.
-routes.use(authMiddleware) 
-
-routes.post("/products", upload.fields([
-  { name: 'file', maxCount: 1 },
-  { name: 'file2', maxCount: 1 },
-  { name: 'file3', maxCount: 1 },
-  { name: 'file4', maxCount: 1 },
-]), ProductController.store);
 
 
 // Rota para busca produtos pelo Nome
@@ -47,16 +33,10 @@ routes.get('/products', ProductController.index)
 routes.get('/products/:id', ProductController.index)
 
 // Rota para avaliar e comentar um produto
-//routes.post('/products/:id/rate', ProductController.rate);
+routes.post('/products/:id/rate', ProductRatingController.store);
+// Rota para obter todas as avaliações de um produto
+routes.get('/products/:id/ratings', ProductRatingController.getAllRatings);
 
-routes.put('/products/:id', upload.fields([
-  { name: 'file', maxCount: 1 },
-  { name: 'file2', maxCount: 1 },
-  { name: 'file3', maxCount: 1 },
-  { name: 'file4', maxCount: 1 },
-]), ProductController.update)
-
-routes.delete('/products/:id', ProductController.delete);
 
 
 routes.post("/categories", upload.single('file'), CategoryController.store)
@@ -69,17 +49,33 @@ routes.post('/frete', FreightController.store);
 
 //Quando um usuário tentar acessar qualquer rota a baixo do authMiddleware a função será executada primeiro.
 //A authMiddlewarefunção verificará se o usuário está logado ou possui as credenciais necessárias para acessar as rotas protegidas.
-//routes.use(authMiddleware) 
+routes.use(authMiddleware) 
 
-// Rota para avaliar e comentar um produto
-routes.post('/products/:id/rate', ProductRatingController.store);
-// Rota para obter todas as avaliações de um produto
-routes.get('/products/:id/ratings', ProductRatingController.getAllRatings);
+
+routes.delete('/products/:id', ProductController.delete);
+
+routes.put('/products/:id', upload.fields([
+  { name: 'file', maxCount: 1 },
+  { name: 'file2', maxCount: 1 },
+  { name: 'file3', maxCount: 1 },
+  { name: 'file4', maxCount: 1 },
+]), ProductController.update)
+
+routes.post("/products", upload.fields([
+  { name: 'file', maxCount: 1 },
+  { name: 'file2', maxCount: 1 },
+  { name: 'file3', maxCount: 1 },
+  { name: 'file4', maxCount: 1 },
+]), ProductController.store);
+
+
 
 routes.post('/orders', OrderController.store)
 routes.put('/orders/:id', OrderController.update)
 routes.get('/orders', OrderController.index)
 routes.get("/orders/last", OrderController.getLastOrder);
+
+routes.get('/compras',  OrderController.getUserOrders);
 
 
 routes.post("/payment", PaymentController.store)

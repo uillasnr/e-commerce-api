@@ -16,8 +16,7 @@ class ProductController {
             previou_price: Yup.number(),
             category_id: Yup.number().required(),
             offer: Yup.boolean(),
-          /*   rating: Yup.number().min(1).max(5),
-            comment: Yup.string(), // Comentário sobre o produto   */
+            news: Yup.boolean(),
         })
 
         try {
@@ -35,7 +34,7 @@ class ProductController {
         }
 
         const { file, file2, file3, file4 } = request.files;
-        const { name, price, previou_price, category_id, offer, description, rating, comment } = request.body;
+        const { name, price, previou_price, category_id, offer, news, description, } = request.body;
 
         const product = await Product.create({
             name,
@@ -48,8 +47,7 @@ class ProductController {
             path_3: file3[0].filename,
             path_4: file4[0].filename,
             offer,
-           /*  rating,
-            comment */
+            news
         });
 
         return response.json(product);
@@ -137,7 +135,8 @@ class ProductController {
             price: Yup.number(),
             previou_price: Yup.number(),
             category_id: Yup.number(),
-            offer: Yup.boolean()
+            offer: Yup.boolean(),
+            news: Yup.boolean()
         })
 
         try {
@@ -172,7 +171,7 @@ class ProductController {
         }
 
 
-        const { name, price, previou_price, category_id, offer, description } = request.body
+        const { name, price, previou_price, category_id, offer, news, description } = request.body
 
         await Product.update(
             {
@@ -182,7 +181,8 @@ class ProductController {
                 previou_price,
                 category_id,
                 path_1,
-                offer
+                offer,
+                news
             },
             { where: { id } }
         )
@@ -218,7 +218,7 @@ class ProductController {
         return response.status(200).json();
     }
 
-  
+
 
 }
 

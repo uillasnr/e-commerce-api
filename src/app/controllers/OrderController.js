@@ -8,7 +8,6 @@ import PaymentController from './PaymentController';
 
 class OrderController {
   async store(request, response) {
-    // Validando informações
     const schema = Yup.object().shape({
       products: Yup.array().of(
         Yup.object().shape({
@@ -70,6 +69,7 @@ class OrderController {
     // Extrai os dados do endereço do corpo da requisição
     const { addressData } = request.body;
 
+
     const totalOrderValue = totalPrice + freightValu;
 
     const order = {
@@ -81,9 +81,9 @@ class OrderController {
       status: 'Pedido realizado',
       totalPrice: totalOrderValue,
       freightValu: freightValu,
-      address: addressData, // Incluir os dados do endereço no objeto do pedido
+      address: addressData, // Incluir os dados do endereço no objeto do pedido 
     };
-    console.log(addressData);
+    // console.log(order);
 
     const orderResponse = await Order.create(order);
 
@@ -104,12 +104,28 @@ class OrderController {
   async getLastOrder(request, response) {
     try {
       const lastOrder = await Order.findOne({}, {}, { sort: { 'createdAt': -1 } });
-      return response.json(lastOrder);
+
+      if (!lastOrder) {
+        return response.json({ message: 'No orders found' });
+      }
+
+      const orderDetails = {
+        user: {
+          id: lastOrder.user.id,
+          name: lastOrder.user.name,
+          createdAt: lastOrder.createdAt,
+        },
+        products: lastOrder.products,
+        address: lastOrder.address,
+        status: lastOrder.status,
+        totalPrice: lastOrder.totalPrice,
+      };
+
+      return response.json(orderDetails);
     } catch (error) {
       return response.status(500).json({ error: 'Failed to retrieve the last order' });
     }
   }
-
 
   // Mostrar todos os pedidos
   async index(request, response) {
@@ -151,6 +167,47 @@ class OrderController {
 
     return response.json({ message: 'Status updated successfully' });
   }
+
+  // Obtém todas as compras feitas por um usuário específico
+  async getUserOrders(request, response) {
+    const { userId } = request;
+
+    try {
+      // usuário a partir do ID
+      const user = await User.findByPk(userId);
+
+      if (!user) {
+        return response.status(404).json({ error: 'User not found' });
+      }
+
+      //buscamos todas as compras associadas ao usuário pelo ID
+      const userOrders = await Order.find({ 'user.id': userId });
+
+      const ordersWithDetails = userOrders.map(order => {
+        return {
+          id: order._id,
+          user: {
+            id: order.user.id,
+            name: order.user.name,
+          },
+          products: order.products,
+          status: order.status,
+          totalPrice: order.totalPrice,
+          freightValu: order.freightValu,
+          address: order.address,
+        };
+      });
+
+      return response.json({
+        user,
+        orders: ordersWithDetails,
+      });
+    } catch (error) {
+      return response.status(500).json({ error: 'Failed to retrieve user orders' });
+    }
+  }
+
 }
+
 
 export default new OrderController();
